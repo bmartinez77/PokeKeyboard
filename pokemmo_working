@@ -1,0 +1,319 @@
+#include <Keyboard.h>
+
+// recursion method
+// void womboCombo();
+
+// Define the pins for rows and columns
+#define ROWS 3
+#define COLS 3
+
+byte rowPins[ROWS] = { 2, 3, 4 };  // Pins for the rows
+byte colPins[COLS] = { 5, 6, 7 };  // Pins for the columns
+
+
+char UP = KEY_UP_ARROW;
+char DOWN = KEY_DOWN_ARROW;
+char LEFT = KEY_LEFT_ARROW;
+char RIGHT = KEY_RIGHT_ARROW;
+char CTRL = KEY_LEFT_CTRL;
+char TAB = KEY_TAB;
+
+
+char keys[ROWS][COLS] = {
+  { '1', '2', '3' },
+  { '4', '5', '6' },
+  { '7', '8', '9' }
+};
+
+void setup() {
+  // Initialize serial communication
+  Serial.begin(9600);
+  // Initialize the keyboard
+  Keyboard.begin();
+
+  // Set rows as INPUT_PULLUP
+  for (int i = 0; i < ROWS; i++) {
+    pinMode(rowPins[i], INPUT_PULLUP);
+  }
+
+  // Set columns as OUTPUT
+  for (int j = 0; j < COLS; j++) {
+    pinMode(colPins[j], OUTPUT);
+    digitalWrite(colPins[j], HIGH);  // High to disable column
+  }
+}
+
+void loop() {
+  // Scan for key presses
+  for (int col = 0; col < COLS; col++) {
+    // Enable the current column
+    digitalWrite(colPins[col], LOW);
+
+    // Scan each row in the column
+    for (int row = 0; row < ROWS; row++) {
+
+
+
+      // If key is pressed
+      if (digitalRead(rowPins[row]) == LOW) {
+        // Output the pressed key
+        char key = keys[row][col];
+        Serial.print("Key Pressed: ");
+        Serial.println(key);  // Correct way to print the character
+        // Key 1 action (Sweet Scent)
+        if (key == '1') {
+          right();
+        }
+        // Key 2 action (Teleport)
+        if (key == '2') {
+          buttonB();
+        }
+
+        // Key 3 action (Sea Path)
+        if (key == '3') {
+         
+          womboCombo();
+        }
+
+        if (key == '4') {
+          down();
+        }
+        if (key == '5') {
+          up();
+        }
+
+        if (key == '6') {
+          teleport();
+          delay(100);
+          seaPath();
+          delay(100);
+          sweetScent();
+        }
+        if (key == '7') {
+          left();
+        }
+        if (key == '8') {
+          buttonA();
+        }
+
+        if (key == '9') {
+          // teleport();
+          seaPath();
+          // sweetScent();
+
+        } else {
+
+          Serial.println("KEY: " + key);
+        }
+      }
+    }
+    // Disable the current columnZ
+    digitalWrite(colPins[col], HIGH);
+  }
+}
+
+
+void up() {
+  Serial.println("UP");
+  Keyboard.press('W');
+  delay(100);
+  Keyboard.release('W');
+  delay(50);
+}
+
+void left() {
+  Serial.println("LEFT");
+  Keyboard.press('A');
+  delay(100);
+  Keyboard.release('A');
+  delay(50);
+}
+
+void down() {
+  Serial.println("DOWN");
+  Keyboard.press('S');
+  delay(100);
+  Keyboard.release('S');
+  delay(50);
+}
+
+void right() {
+  Serial.println("RIGHT");
+  Keyboard.press('D');
+  delay(100);
+  Keyboard.release('D');
+  delay(50);
+}
+
+void buttonA() {
+  Serial.println("A");
+  Keyboard.press('Z');
+  delay(100);
+  Keyboard.release('Z');
+  delay(50);
+}
+
+void buttonB() {
+  Serial.println("B");
+  Keyboard.press('X');
+  delay(100);
+  Keyboard.release('X');
+  delay(50);
+}
+
+
+void sweetScent() {
+
+  Serial.println("Sweet Scent");
+  Serial.println("TAB");
+  Keyboard.press(TAB);
+  delay(100);
+  Keyboard.release(TAB);
+  delay(12500);
+
+  // Press 'z' 5 times with a loop
+  for (int i = 0; i < 5; i++) {
+    Serial.println('Z');
+    Keyboard.press('Z');
+    delay(100);
+    Keyboard.release('Z');
+    delay(800);
+  }
+
+  Serial.println("Sweet Scent Complete");
+  Keyboard.releaseAll();
+  delay(350);
+}
+
+void womboCombo() {
+  teleport();
+  delay(100);
+  seaPath();
+  delay(100);
+
+  for (int count = 0; count < 6; count++) {
+    Serial.print("Counter: ");
+    Serial.println(count);
+    sweetScent();
+
+    delay(10000);
+  }
+
+  womboCombo();
+}
+
+
+void teleport() {
+  Serial.println("Teleport");
+  Serial.println('8');
+  Keyboard.press('8');
+  delay(100);
+  Keyboard.release('8');
+  delay(3000);
+
+  // Press 'z' 5 times with a loop
+  for (int i = 0; i < 4; i++) {
+    Serial.println('Z');
+    Keyboard.press('Z');
+    delay(100);
+    Keyboard.release('Z');
+    delay(1200);
+  }
+    delay(800);
+
+    // Press 'z' 5 times with a loop
+  for (int i = 0; i < 4; i++) {
+    Serial.println('X');
+    Keyboard.press('X');
+    delay(100);
+    Keyboard.release('X');
+    delay(800);
+  }
+
+  Serial.println("Teleport Complete");
+
+  Keyboard.releaseAll();
+  delay(50);
+}
+
+void seaPath() {
+  Serial.println("Sea Path");
+  Serial.println('X');
+  Keyboard.press('X');
+  for (int count = 0; count < 15; count++) {
+    Serial.println('S');
+    Keyboard.press('S');
+    delay(100);
+    Keyboard.release('S');
+    delay(10);
+  }
+
+  delay(700);
+  for (int count = 0; count < 3; count++) {
+    Serial.println('S');
+    Keyboard.press('S');
+    delay(100);
+    Keyboard.release('S');
+    delay(10);
+  }
+  delay(700);
+
+
+
+  for (int count = 0; count < 26; count++) {
+    Serial.println('D');
+    Keyboard.press('D');
+    delay(100);
+    Keyboard.release('D');
+    delay(100);
+  }
+  delay(200);
+
+  for (int count = 0; count < 4; count++) {
+    Serial.println('S');
+    Keyboard.press('S');
+    delay(100);
+    Keyboard.release('S');
+    delay(100);
+  }
+  delay(200);
+
+
+  for (int count = 0; count < 8; count++) {
+    Serial.println('D');
+    Keyboard.press('D');
+    delay(100);
+    Keyboard.release('D');
+    delay(100);
+  }
+  delay(200);
+
+  for (int count = 0; count < 3; count++) {
+    Serial.println('S');
+    Keyboard.press('S');
+    delay(100);
+    Keyboard.release('S');
+    delay(100);
+  }
+  delay(200);
+  
+  Keyboard.releaseAll();
+
+    Keyboard.press('Z');
+    delay(100);
+    Keyboard.release('Z');
+    delay(5000);
+  
+
+  for (int count = 0; count < 5; count++) {
+    Serial.println('Z');
+    Keyboard.press('Z');
+    delay(100);
+    Keyboard.release('Z');
+    delay(1400);
+  }
+  delay(200);
+  Serial.println("Sea Path Complete");
+  Keyboard.releaseAll();
+  delay(150);
+}
