@@ -11,12 +11,16 @@ byte rowPins[ROWS] = { 2, 3, 4 };  // Pins for the rows
 byte colPins[COLS] = { 5, 6, 7 };  // Pins for the columns
 
 
-char UP = KEY_UP_ARROW;
-char DOWN = KEY_DOWN_ARROW;
-char LEFT = KEY_LEFT_ARROW;
-char RIGHT = KEY_RIGHT_ARROW;
+char UP = 'W';
+char DOWN = 'S';
+char LEFT = 'A';
+char RIGHT = 'D';
 char CTRL = KEY_LEFT_CTRL;
 char TAB = KEY_TAB;
+char SWEET_SCENT = KEY_TAB;
+char TELEPORT = '9';
+char KEY_A = 'Z';
+char KEY_B = 'X';
 
 
 char keys[ROWS][COLS] = {
@@ -71,7 +75,7 @@ void loop() {
 
         // Key 3 action (Sea Path)
         if (key == '3') {
-         
+          // teleport();
           womboCombo();
         }
 
@@ -98,7 +102,7 @@ void loop() {
 
         if (key == '9') {
           // teleport();
-          seaPath();
+          // seaPath();
           // sweetScent();
 
         } else {
@@ -115,74 +119,73 @@ void loop() {
 
 void up() {
   Serial.println("UP");
-  Keyboard.press('W');
+  Keyboard.press(UP);
   delay(100);
-  Keyboard.release('W');
+  Keyboard.release(UP);
   delay(50);
 }
 
 void left() {
   Serial.println("LEFT");
-  Keyboard.press('A');
+  Keyboard.press(LEFT);
   delay(100);
-  Keyboard.release('A');
+  Keyboard.release(LEFT);
   delay(50);
 }
 
 void down() {
   Serial.println("DOWN");
-  Keyboard.press('S');
+  Keyboard.press(DOWN);
   delay(100);
-  Keyboard.release('S');
+  Keyboard.release(DOWN);
   delay(50);
 }
 
 void right() {
   Serial.println("RIGHT");
-  Keyboard.press('D');
+  Keyboard.press(RIGHT);
   delay(100);
-  Keyboard.release('D');
+  Keyboard.release(RIGHT);
   delay(50);
 }
 
 void buttonA() {
   Serial.println("A");
-  Keyboard.press('Z');
+  Keyboard.press(KEY_A);
   delay(100);
-  Keyboard.release('Z');
+  Keyboard.release(KEY_A);
   delay(50);
 }
 
 void buttonB() {
   Serial.println("B");
-  Keyboard.press('X');
+  Keyboard.press(KEY_B);
   delay(100);
-  Keyboard.release('X');
+  Keyboard.release(KEY_B);
   delay(50);
 }
 
 
 void sweetScent() {
 
-  Serial.println("Sweet Scent");
-  Serial.println("TAB");
-  Keyboard.press(TAB);
+  Serial.println("SWEET_SCENT");
+  Keyboard.press(SWEET_SCENT);
   delay(100);
-  Keyboard.release(TAB);
+  Keyboard.release(SWEET_SCENT);
   delay(12500);
 
   // Press 'z' 5 times with a loop
   for (int i = 0; i < 5; i++) {
-    Serial.println('Z');
-    Keyboard.press('Z');
+    Serial.println(KEY_A);
+    Keyboard.press(KEY_A);
     delay(100);
-    Keyboard.release('Z');
+    Keyboard.release(KEY_A);
     delay(800);
   }
 
   Serial.println("Sweet Scent Complete");
   Keyboard.releaseAll();
-  delay(350);
+  delay(550);
 }
 
 void womboCombo() {
@@ -196,7 +199,7 @@ void womboCombo() {
     Serial.println(count);
     sweetScent();
 
-    delay(10000);
+    delay(15000);
   }
 
   womboCombo();
@@ -205,28 +208,28 @@ void womboCombo() {
 
 void teleport() {
   Serial.println("Teleport");
-  Serial.println('8');
-  Keyboard.press('8');
+  Serial.println(TELEPORT);
+  Keyboard.press(TELEPORT);
   delay(100);
-  Keyboard.release('8');
-  delay(3000);
+  Keyboard.release(TELEPORT);
+  delay(5000);
 
   // Press 'z' 5 times with a loop
   for (int i = 0; i < 4; i++) {
-    Serial.println('Z');
-    Keyboard.press('Z');
+    Serial.println(KEY_A);
+    Keyboard.press(KEY_A);
     delay(100);
-    Keyboard.release('Z');
+    Keyboard.release(KEY_A);
     delay(1200);
   }
     delay(800);
 
     // Press 'z' 5 times with a loop
   for (int i = 0; i < 4; i++) {
-    Serial.println('X');
-    Keyboard.press('X');
+    Serial.println(KEY_B);
+    Keyboard.press(KEY_B);
     delay(100);
-    Keyboard.release('X');
+    Keyboard.release(KEY_B);
     delay(800);
   }
 
@@ -238,22 +241,22 @@ void teleport() {
 
 void seaPath() {
   Serial.println("Sea Path");
-  Serial.println('X');
-  Keyboard.press('X');
+  Serial.println(KEY_B);
+  Keyboard.press(KEY_B);
   for (int count = 0; count < 15; count++) {
-    Serial.println('S');
-    Keyboard.press('S');
+    Serial.println(DOWN);
+    Keyboard.press(DOWN);
     delay(100);
-    Keyboard.release('S');
+    Keyboard.release(DOWN);
     delay(10);
   }
 
   delay(700);
   for (int count = 0; count < 3; count++) {
-    Serial.println('S');
-    Keyboard.press('S');
+    Serial.println(DOWN);
+    Keyboard.press(DOWN);
     delay(100);
-    Keyboard.release('S');
+    Keyboard.release(DOWN);
     delay(10);
   }
   delay(700);
@@ -261,55 +264,55 @@ void seaPath() {
 
 
   for (int count = 0; count < 26; count++) {
-    Serial.println('D');
-    Keyboard.press('D');
+    Serial.println(RIGHT);
+    Keyboard.press(RIGHT);
     delay(100);
-    Keyboard.release('D');
+    Keyboard.release(RIGHT);
     delay(100);
   }
   delay(200);
 
   for (int count = 0; count < 4; count++) {
-    Serial.println('S');
-    Keyboard.press('S');
+    Serial.println(DOWN);
+    Keyboard.press(DOWN);
     delay(100);
-    Keyboard.release('S');
+    Keyboard.release(DOWN);
     delay(100);
   }
   delay(200);
 
 
   for (int count = 0; count < 8; count++) {
-    Serial.println('D');
-    Keyboard.press('D');
+    Serial.println(RIGHT);
+    Keyboard.press(RIGHT);
     delay(100);
-    Keyboard.release('D');
+    Keyboard.release(RIGHT);
     delay(100);
   }
   delay(200);
 
   for (int count = 0; count < 3; count++) {
-    Serial.println('S');
-    Keyboard.press('S');
+    Serial.println(DOWN);
+    Keyboard.press(DOWN);
     delay(100);
-    Keyboard.release('S');
+    Keyboard.release(DOWN);
     delay(100);
   }
   delay(200);
   
   Keyboard.releaseAll();
 
-    Keyboard.press('Z');
+    Keyboard.press(KEY_A);
     delay(100);
-    Keyboard.release('Z');
+    Keyboard.release(KEY_A);
     delay(5000);
   
 
   for (int count = 0; count < 5; count++) {
-    Serial.println('Z');
-    Keyboard.press('Z');
+    Serial.println(KEY_A);
+    Keyboard.press(KEY_A);
     delay(100);
-    Keyboard.release('Z');
+    Keyboard.release(KEY_A);
     delay(1400);
   }
   delay(200);
